@@ -1,0 +1,12 @@
+bin/
+node_modules/
+null/
+obj/
+target/
+.bloop/
+.bsp/
+.idea/
+.metals/
+.vs/
+.vscode/
+metals.sbt

@@ -1,0 +1,123 @@
+name: "Main Build"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    tags: [v*]
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  test:
+    name: Execute Tests (Java ${{ matrix.java }})
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [17, 21]
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: ${{ matrix.java }}
+          check-latest: true
+          cache: "sbt"
+
+      - name: Execute Unit Tests
+        run: sbt +test
+
+      - name: Package Project Products
+        run: sbt package
+
+  publish:
+    name: Publish Release
+    needs: [test]
+    if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+          check-latest: true
+          cache: "sbt"
+
+      - name: Import Signing Key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.OSS_PUBLISH_USER_SIGNING_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: Update Signing Key Trust Level
+        run: echo -e "trust\n5\ny" | gpg --batch --no-tty --command-fd 0 --edit-key ${{ secrets.OSS_PUBLISH_USER_SIGNING_KEY_ID }}
+
+      - name: Publish Projects
+        run: sbt publishSigned sonatypeBundleRelease
+        env:
+          PUBLISH_USER: ${{ secrets.OSS_PUBLISH_USER }}
+          PUBLISH_USER_PASSPHRASE: ${{ secrets.OSS_PUBLISH_USER_PASSPHRASE }}
+          SIGNING_KEY_ID: ${{ secrets.OSS_PUBLISH_USER_SIGNING_KEY_ID }}
+
+  publish-documentation:
+    name: Publish Documentation
+    needs: [ publish ]
+    if: github.event_name != 'pull_request' && startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+          check-latest: true
+          cache: "sbt"
+
+      - name: Import Signing Key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.OSS_PUBLISH_USER_SIGNING_KEY }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_committer_name: Shuwari Africa Team
+
+      - name: Update Signing Key Trust Level
+        run: echo -e "trust\n5\ny" | gpg --batch --no-tty --command-fd 0 --edit-key ${{ secrets.OSS_PUBLISH_USER_SIGNING_KEY_ID }}
+
+      - name: Generate Documentation
+        run: sbt laminae-documentation/mdoc
+
+      - name: Commit Documentation Changes
+        run: |
+          git add ./README.md && \
+          git commit --gpg-sign --message "Update documentation for ${{ github.ref_name }}"
+
+      - name: Push Documentation Changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.OSS_TEAM_TOKEN }}
+          branch: main
