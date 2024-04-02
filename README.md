@@ -14,7 +14,7 @@ __________________________________
 Includes utility classes and methods used by other modules.
 
 ```scala
-libraryDependencies += "africa.shuwari.laminae" %% "laminae-core" % "SNAPSHOT"
+libraryDependencies += "africa.shuwari.laminae" %% "laminae-core" % "0.1.1"
 ```
 __________________________________
 
@@ -23,7 +23,7 @@ __________________________________
 Wrapper for [Siemens IX](https://ix.siemens.io/) web components.
 
 ```scala
-libraryDependencies += "africa.shuwari.laminae" %% "laminae-ix" % "SNAPSHOT"
+libraryDependencies += "africa.shuwari.laminae" %% "laminae-ix" % "0.1.1"
 ```
 __________________________________
 
