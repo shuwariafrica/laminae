@@ -16,7 +16,7 @@ inThisBuild(
       Some("scm:git:git@github.com:shuwariafrica/laminae.git")
     ).some,
     startYear := Some(2024),
-    semanticdbEnabled := true,
+    semanticdbEnabled := true
   )
 )
 
@@ -29,7 +29,6 @@ lazy val `laminae-root` =
     .settings(sonatypeProfileNameSetting)
     .aggregate(`laminae-core`, `laminae-ix`)
 
-
 lazy val `laminae-core` =
   project
     .in(file("modules/core"))
@@ -37,9 +36,8 @@ lazy val `laminae-core` =
     .enablePlugins(ScalaJSPlugin)
     .dependsOn(libraries.laminar)
     .settings(
-      shuwarijs.basePackages ++= List("laminae"),
+      shuwarijs.basePackages ++= List("laminae")
     )
-
 
 lazy val `laminae-ix` =
   project
@@ -49,7 +47,7 @@ lazy val `laminae-ix` =
     .dependsOn(libraries.laminar)
     .dependsOn(`laminae-core`)
     .settings(
-      shuwarijs.basePackages ++= List("laminae.components.ix"),
+      shuwarijs.basePackages ++= List("laminae.components.ix")
     )
 
 lazy val `laminae-documentation` =
