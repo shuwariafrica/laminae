@@ -8,8 +8,8 @@ inThisBuild(
     homepage := Some(url("https://github.com/shuwarifrica/sbt-js")),
     version := VersionPlugin.versionSetting.value,
     dynver := VersionPlugin.versionSetting.toTaskable.toTask.value,
-//    sonatypeCredentialHost := "s01.oss.sonatype.org",
-//    publishCredentials,
+    sonatypeCredentialHost := "s01.oss.sonatype.org",
+    publishCredentials,
     scmInfo := ScmInfo(
       url("https://github.com/shuwariafrica/laminae"),
       "scm:git:https://github.com/shuwariafrica/laminae.git",
