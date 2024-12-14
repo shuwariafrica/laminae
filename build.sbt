@@ -64,7 +64,7 @@ lazy val `laminae-documentation` =
     )
 
 lazy val libraries = new {
-  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.0.0")
+  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.2.0")
 }
 
 def publishCredentials: Setting[?] = credentials := List(
