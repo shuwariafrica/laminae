@@ -2,7 +2,7 @@ import sbt.Def
 
 inThisBuild(
   List(
-    scalaVersion := "3.4.3",
+    scalaVersion := "3.6.2",
     organization := "africa.shuwari.laminae",
     description := "Laminae collection for easier construction of Laminar applications.",
     homepage := Some(url("https://github.com/shuwarifrica/sbt-js")),
