@@ -1,18 +1,24 @@
 import sbt.*
-import sbt.Keys.*
+import sbtdynver.DynVerPlugin
 import sbtdynver.DynVerPlugin.autoImport.*
 
 object VersionPlugin extends AutoPlugin {
 
-  //  def pgpSettings = List(
-  //    PgpKeys.pgpSelectPassphrase :=
-  //      sys.props
-  //        .get("SIGNING_KEY_PASSPHRASE")
-  //        .map(_.toCharArray),
-  //    usePgpKeyHex(System.getenv("SIGNING_KEY_ID"))
-  //  )
+  override def requires: Plugins = DynVerPlugin
 
-  def baseVersionSetting(appendMetadata: Boolean): Def.Initialize[String] = {
+  override def trigger = allRequirements
+
+  override def buildSettings: Seq[Def.Setting[?]] = List(
+    Keys.version := versionSetting.value,
+    dynver := versionSetting.toTaskable.toTask.value,
+    autoImport.implementationVersion := implementationVersionSetting.value
+  )
+
+  object autoImport {
+    val implementationVersion: SettingKey[String] = settingKey[String]("Implementation version")
+  }
+
+  private def baseVersionSetting(appendMetadata: Boolean): Def.Initialize[String] = {
     def baseVersionFormatter(in: sbtdynver.GitDescribeOutput) = {
       def meta =
         if (appendMetadata) s"+${in.commitSuffix.distance}.${in.commitSuffix.sha}"
@@ -22,7 +28,6 @@ object VersionPlugin extends AutoPlugin {
       else {
         val parts = {
           def current = in.ref.dropPrefix.split("\\.").map(_.toInt)
-
           current.updated(current.length - 1, current.last + 1)
         }
         s"${parts.mkString(".")}-SNAPSHOT$meta"
@@ -31,14 +36,14 @@ object VersionPlugin extends AutoPlugin {
 
     Def.setting(
       dynverGitDescribeOutput.value.mkVersion(
-        baseVersionFormatter _,
-        "SNAPSHOT"
+        baseVersionFormatter,
+        "HEAD-SNAPSHOT"
       )
     )
   }
 
-  def versionSetting = baseVersionSetting(appendMetadata = false)
+  private def versionSetting = baseVersionSetting(appendMetadata = false)
 
-  def implementationVersionSetting = baseVersionSetting(appendMetadata = true)
+  private def implementationVersionSetting = baseVersionSetting(appendMetadata = true)
 
 }
