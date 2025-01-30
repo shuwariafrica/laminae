@@ -1,7 +1,5 @@
-bin/
+.*
 node_modules/
-null/
-obj/
 target/
 .bloop/
 .bsp/
@@ -10,3 +8,9 @@ target/
 .vs/
 .vscode/
 metals.sbt
+
+!.github/
+!.git-blame-ignore-revs
+!.gitignore
+!.scalafix.conf
+!.scalafmt.conf
