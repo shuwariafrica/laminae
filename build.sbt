@@ -1,6 +1,6 @@
 inThisBuild(
   List(
-    scalaVersion := "3.6.3",
+    scalaVersion := "3.7.1",
     organization := "africa.shuwari.laminae",
     description := "Laminae collection for easier construction of Laminar applications.",
     homepage := Some(url("https://github.com/shuwarifrica/sbt-js")),
@@ -30,7 +30,7 @@ lazy val `laminae-core` =
     .enablePlugins(ScalaJSPlugin)
     .dependsOn(libraries.laminar)
     .settings(
-      ScalaCompiler.basePackages ++= List("laminae")
+      ScalaCompiler.basePackages += "laminae"
     )
 
 lazy val `laminae-ix` =
@@ -41,7 +41,7 @@ lazy val `laminae-ix` =
     .dependsOn(libraries.laminar)
     .dependsOn(`laminae-core`)
     .settings(
-      ScalaCompiler.basePackages ++= List("laminae.components.ix")
+      ScalaCompiler.basePackages += "laminae.components.ix"
     )
 
 lazy val `laminae-documentation` =
@@ -58,5 +58,5 @@ lazy val `laminae-documentation` =
     )
 
 lazy val libraries = new {
-  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.2.0")
+  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.2.1")
 }

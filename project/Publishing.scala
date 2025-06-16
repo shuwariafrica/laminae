@@ -2,7 +2,7 @@ import com.jsuereth.sbtpgp.SbtPgp
 import com.jsuereth.sbtpgp.SbtPgp.autoImport.{PgpKeys, usePgpKeyHex}
 import xerial.sbt.Sonatype
 import xerial.sbt.Sonatype.autoImport.{sonatypeCredentialHost, sonatypeProfileName, sonatypePublishToBundle}
-
+import africa.shuwari.sbt.version.VersionPlugin
 import sbt.Keys.*
 import sbt.*
 
@@ -47,7 +47,7 @@ object Publishing extends AutoPlugin {
       "Specification-Version" -> version.value,
       "Specification-Vendor" -> organizationName.value,
       "Implementation-Title" -> name.value,
-      "Implementation-Version" -> VersionPlugin.autoImport.implementationVersion.value,
+      "Implementation-Version" -> VersionPlugin.autoImport.fullVersion.value,
       "Implementation-Vendor-Id" -> organization.value,
       "Implementation-Vendor" -> organizationName.value
     ),
