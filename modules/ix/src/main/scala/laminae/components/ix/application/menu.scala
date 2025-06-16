@@ -16,6 +16,7 @@
  * License.                                                      *
  *****************************************************************/
 package laminae.components.ix
+package application
 
 import com.raquo.laminar.api.L
 import com.raquo.laminar.api.L.eventProp
@@ -188,3 +189,42 @@ object MenuAvatarItem extends WebComponent:
 
   object events:
     val itemClick: EventProp[MouseEvent] = eventProp("itemClick")
+
+object MenuAbout extends WebComponent:
+
+  @js.native
+  trait RawElement extends js.Object
+
+  @js.native
+  @JSImport("@siemens/ix/dist/esm/ix-menu-about.entry")
+  object RawImport extends js.Object
+
+  initialise(RawImport)
+
+  override type Ref = dom.html.Element & RawElement
+
+  protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-menu-about")
+
+  val activeTabLabel: HtmlAttr[String] = stringAttr("active-tab-label")
+
+  val label: HtmlAttr[String] = stringAttr("label")
+
+  object events:
+    val close: EventProp[dom.CustomEvent] = eventProp("close")
+
+object MenuAboutItem extends WebComponent:
+
+  @js.native
+  trait RawElement extends js.Object
+
+  @js.native
+  @JSImport("@siemens/ix/dist/esm/ix-menu-about-item.entry")
+  object RawImport extends js.Object
+
+  initialise(RawImport)
+
+  override type Ref = dom.html.Element & RawElement
+
+  protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-menu-about-item")
+
+  val label: HtmlAttr[String] = stringAttr("label")

@@ -19,6 +19,7 @@ package laminae.components.ix.application
 
 import com.raquo.laminar.api.L.HtmlAttr
 import com.raquo.laminar.api.L.htmlAttr
+import com.raquo.laminar.codecs.Codec
 import com.raquo.laminar.tags.CustomHtmlTag
 
 import scala.scalajs.js
@@ -29,8 +30,16 @@ import org.scalajs.dom
 import laminae.components.WebComponent
 import laminae.components.ix.util.booleanAttr
 import laminae.components.ix.util.initialise
+import laminae.components.ix.util.stringEnumCodec
 
 object Application extends WebComponent:
+
+  enum Breakpoint:
+    case sm, md, lg
+
+  object Breakpoint:
+    val AsIsStringCodec: Codec[Breakpoint, String] =
+      stringEnumCodec(Breakpoint.valueOf)
 
   @js.native
   trait RawElement extends js.Object
@@ -47,10 +56,10 @@ object Application extends WebComponent:
 
   // val appSwitchConfig: HtmlAttr[String] = stringAttr("appSwitchConfig") TODO
 
-  // val breakpoints: HtmlAttr[Set[ApplicationBreakpoint]] TODO
+  // val breakpoints: HtmlAttr[Set[Breakpoint]] TODO
 
-  val forceBreakpoint: HtmlAttr[ApplicationBreakpoint] =
-    htmlAttr("force-breakpoint", ApplicationBreakpoint.AsIsStringCodec)
+  val forceBreakpoint: HtmlAttr[Breakpoint] =
+    htmlAttr("force-breakpoint", Breakpoint.AsIsStringCodec)
 
 // TODO val theme: HtmlAttr[String]
 

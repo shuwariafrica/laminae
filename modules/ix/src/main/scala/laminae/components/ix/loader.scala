@@ -17,8 +17,7 @@
  *****************************************************************/
 package laminae.components.ix
 
-import scala.concurrent.Future
-
+import scala.concurrent.{ExecutionContext, Future}
 import scala.scalajs.js
 import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation.JSImport
@@ -42,10 +41,18 @@ object loader:
     @JSImport("@siemens/ix-icons/loader", "defineCustomElements")
     def defineIconCustomElements(): Promise[js.Any] = js.native
 
-  inline def applyPolyfills(): Future[js.Any] = RawImports.applyIconPolyfills().toFuture
+  inline def applyPolyfills(): Future[?] = RawImports.applyIconPolyfills().toFuture
 
-  inline def defineCustomElements(): Future[js.Any] = RawImports.defineCustomElements().toFuture
+  inline def defineCustomElements(): Future[?] = RawImports.defineCustomElements().toFuture
 
-  inline def applyIconPolyfills(): Future[js.Any] = RawImports.applyIconPolyfills().toFuture
+  inline def applyIconPolyfills(): Future[?] = RawImports.applyIconPolyfills().toFuture
 
-  inline def defineIconCustomElements(): Future[js.Any] = RawImports.defineIconCustomElements().toFuture
+  inline def defineIconCustomElements(): Future[?] = RawImports.defineIconCustomElements().toFuture
+
+  def initialise()(using ExecutionContext): Future[Unit] =
+    for
+      _ <- applyPolyfills()
+      _ <- defineCustomElements()
+      _ <- applyIconPolyfills()
+      _ <- defineIconCustomElements()
+    yield ()

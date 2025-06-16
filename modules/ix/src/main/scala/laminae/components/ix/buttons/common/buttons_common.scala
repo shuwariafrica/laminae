@@ -15,7 +15,7 @@
  * language governing permissions and limitations under the      *
  * License.                                                      *
  *****************************************************************/
-package laminae.components.ix.buttons
+package laminae.components.ix.buttons.common
 
 import com.raquo.laminar.codecs.BooleanAsAttrPresenceCodec
 import com.raquo.laminar.codecs.Codec
@@ -62,7 +62,6 @@ object ButtonAttributes:
   val variant: HtmlAttr[ButtonVariant] = HtmlAttr("variant", stringEnumCodec(ButtonVariant.valueOf))
 
   val `type`: HtmlAttr[ButtonType] = HtmlAttr("type", stringEnumCodec(ButtonType.valueOf))
-
   // Dropdown Button
   val closeBehavior: HtmlAttr[ButtonCloseBehaviour] =
     HtmlAttr("close-behaviour", stringEnumCodec(ButtonCloseBehaviour.valueOf))

@@ -26,23 +26,31 @@ import scala.scalajs.js.annotation.JSImport
 import org.scalajs.dom
 
 import laminae.components.WebComponent
+//import laminae.components.ix.buttons.common.ButtonCloseBehaviour
 import laminae.components.ix.util.initialise
 object Button extends WebComponent:
+
+  type ButtonVariant = common.ButtonVariant
+  inline def ButtonVariant: common.ButtonVariant.type = common.ButtonVariant
+
+  type ButtonType = common.ButtonType
+  inline def ButtonType: common.ButtonType.type = common.ButtonType
+
   override protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-button")
 
-  inline def disabled: HtmlAttr[Boolean] = ButtonAttributes.disabled
+  inline def disabled: HtmlAttr[Boolean] = common.ButtonAttributes.disabled
 
-  inline def ghost: HtmlAttr[Boolean] = ButtonAttributes.ghost
+  inline def ghost: HtmlAttr[Boolean] = common.ButtonAttributes.ghost
 
-  inline def icon: HtmlAttr[String] = ButtonAttributes.icon // FIXME: Icon name library
+  inline def icon: HtmlAttr[String] = common.ButtonAttributes.icon // FIXME: Icon name library
 
-  inline def loading: HtmlAttr[Boolean] = ButtonAttributes.loading
+  inline def loading: HtmlAttr[Boolean] = common.ButtonAttributes.loading
 
-  inline def outline: HtmlAttr[Boolean] = ButtonAttributes.outline
+  inline def outline: HtmlAttr[Boolean] = common.ButtonAttributes.outline
 
-  inline def variant: HtmlAttr[ButtonVariant] = ButtonAttributes.variant
+  inline def variant: HtmlAttr[ButtonVariant] = common.ButtonAttributes.variant
 
-  inline def `type`: HtmlAttr[ButtonType] = ButtonAttributes.`type`
+  inline def `type`: HtmlAttr[ButtonType] = common.ButtonAttributes.`type`
 
   @js.native
   trait RawElement extends js.Object
@@ -57,25 +65,41 @@ object Button extends WebComponent:
 
 object DropdownButton extends WebComponent:
 
+  type ButtonVariant = common.ButtonVariant
+
+  inline def ButtonVariant: common.ButtonVariant.type = common.ButtonVariant
+
+  type ButtonType = common.ButtonType
+
+  inline def ButtonType: common.ButtonType.type = common.ButtonType
+  
+  inline def ButtonPlacement: common.ButtonPlacement.type = common.ButtonPlacement
+
+  type ButtonPlacement = common.ButtonPlacement
+
+  type ButtonCloseBehaviour = common.ButtonCloseBehaviour
+
+  inline def ButtonCloseBehaviour: common.ButtonCloseBehaviour.type = common.ButtonCloseBehaviour
+
   override protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-dropdown-button")
 
-  inline def disabled: HtmlAttr[Boolean] = ButtonAttributes.disabled
+  inline def disabled: HtmlAttr[Boolean] = common.ButtonAttributes.disabled
 
-  inline def ghost: HtmlAttr[Boolean] = ButtonAttributes.ghost
+  inline def ghost: HtmlAttr[Boolean] = common.ButtonAttributes.ghost
 
-  inline def icon: HtmlAttr[String] = ButtonAttributes.icon // FIXME: Icon name library
+  inline def icon: HtmlAttr[String] = common.ButtonAttributes.icon // FIXME: Icon name library
 
-  inline def loading: HtmlAttr[Boolean] = ButtonAttributes.loading
+  inline def loading: HtmlAttr[Boolean] = common.ButtonAttributes.loading
 
-  inline def outline: HtmlAttr[Boolean] = ButtonAttributes.outline
+  inline def outline: HtmlAttr[Boolean] = common.ButtonAttributes.outline
 
-  inline def variant: HtmlAttr[ButtonVariant] = ButtonAttributes.variant
+  inline def variant: HtmlAttr[ButtonVariant] = common.ButtonAttributes.variant
 
-  inline def closeBehavior: HtmlAttr[ButtonCloseBehaviour] = ButtonAttributes.closeBehavior
+  inline def closeBehavior: HtmlAttr[ButtonCloseBehaviour] = common.ButtonAttributes.closeBehavior
 
-  inline def label: HtmlAttr[String] = ButtonAttributes.label
+  inline def label: HtmlAttr[String] = common.ButtonAttributes.label
 
-  inline def placement: HtmlAttr[ButtonPlacement] = ButtonAttributes.placement
+  inline def placement: HtmlAttr[ButtonPlacement] = common.ButtonAttributes.placement
 
   @js.native
   trait RawElement extends js.Object

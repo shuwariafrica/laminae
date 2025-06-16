@@ -17,9 +17,8 @@
  *****************************************************************/
 package laminae.components.ix
 
-import com.raquo.laminar.api.L.HtmlAttr
-import com.raquo.laminar.api.L.htmlAttr
 import com.raquo.laminar.codecs.StringAsIsCodec
+import com.raquo.laminar.keys.HtmlAttr
 import com.raquo.laminar.tags.CustomHtmlTag
 
 import scala.annotation.targetName
@@ -56,4 +55,4 @@ object Icon extends WebComponent:
 
   val name: HtmlAttr[String] = stringAttr("name")
 
-  val size: HtmlAttr[IconSize] = htmlAttr("size", stringEnumCodec(IconSize.valueOf)) // FIXME: IconSize type
+  val size: HtmlAttr[IconSize] = HtmlAttr("size", stringEnumCodec(IconSize.valueOf))

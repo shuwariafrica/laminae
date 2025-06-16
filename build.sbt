@@ -2,12 +2,10 @@ import sbt.Def
 
 inThisBuild(
   List(
-    scalaVersion := "3.4.1",
+    scalaVersion := "3.6.4",
     organization := "africa.shuwari.laminae",
     description := "Laminae collection for easier construction of Laminar applications.",
     homepage := Some(url("https://github.com/shuwarifrica/sbt-js")),
-    version := VersionPlugin.versionSetting.value,
-    dynver := VersionPlugin.versionSetting.toTaskable.toTask.value,
     sonatypeCredentialHost := "s01.oss.sonatype.org",
     publishCredentials,
     scmInfo := ScmInfo(
@@ -37,7 +35,7 @@ lazy val `laminae-core` =
     .enablePlugins(ScalaJSPlugin)
     .dependsOn(libraries.laminar)
     .settings(
-      shuwarijs.basePackages ++= List("laminae"),
+      ScalaCompiler.basePackages += "laminae",
     )
 
 
@@ -49,7 +47,7 @@ lazy val `laminae-ix` =
     .dependsOn(libraries.laminar)
     .dependsOn(`laminae-core`)
     .settings(
-      shuwarijs.basePackages ++= List("laminae.components.ix"),
+      ScalaCompiler.basePackages += "laminae.components.ix",
     )
 
 lazy val `laminae-documentation` =
@@ -66,7 +64,7 @@ lazy val `laminae-documentation` =
     )
 
 lazy val libraries = new {
-  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.0.0-RC1")
+  val laminar = Def.setting("com.raquo" %%% "laminar" % "17.2.1")
 }
 
 def publishCredentials: Setting[?] = credentials := List(
@@ -95,7 +93,7 @@ def publishSettings: List[Setting[?]] = publishCredentials +: pgpSettings ++: Li
     "Specification-Version" -> version.value,
     "Specification-Vendor" -> organizationName.value,
     "Implementation-Title" -> name.value,
-    "Implementation-Version" -> VersionPlugin.implementationVersionSetting.value,
+    "Implementation-Version" -> fullVersion.value,
     "Implementation-Vendor-Id" -> organization.value,
     "Implementation-Vendor" -> organizationName.value
   ),

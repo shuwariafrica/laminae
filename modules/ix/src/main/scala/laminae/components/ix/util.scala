@@ -36,8 +36,8 @@ private object util:
 
   def initialise(obj: js.Object): Unit = ()
 
-  inline def stringEnumCodec[A <: Enum](f: String => A): Codec[A, String] =
-    new Codec[A, String]:
-      override def decode(domValue: String): A = f(domValue)
-
-      override def encode(scalaValue: A): String = scalaValue.toString
+  protected final class StringEnumCodec[A <: Enum](f: String => A) extends Codec[A, String]:
+    override def decode(domValue: String): A = f(domValue)
+    override def encode(scalaValue: A): String = scalaValue.toString
+  
+  inline def stringEnumCodec[A <: Enum](f: String => A): Codec[A, String] = new StringEnumCodec(f)

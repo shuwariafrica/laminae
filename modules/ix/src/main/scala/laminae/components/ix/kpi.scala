@@ -1,4 +1,4 @@
-/*****************************************************************
+ /*****************************************************************
  * Copyright © Shuwari Africa Ltd. All rights reserved.          *
  *                                                               *
  * Shuwari Africa Ltd. licenses this file to you under the terms *
@@ -15,8 +15,10 @@
  * language governing permissions and limitations under the      *
  * License.                                                      *
  *****************************************************************/
-package laminae.components.ix.application
+package laminae.components.ix
 
+import com.raquo.laminar.codecs.StringAsIsCodec
+import com.raquo.laminar.keys.HtmlAttr
 import com.raquo.laminar.tags.CustomHtmlTag
 
 import scala.scalajs.js
@@ -24,24 +26,41 @@ import scala.scalajs.js.annotation.JSImport
 
 import org.scalajs.dom
 
-import laminae.components.Slot
 import laminae.components.WebComponent
 import laminae.components.ix.util.initialise
+import laminae.components.ix.util.stringAttr
+import laminae.components.ix.util.stringEnumCodec
 
-object Content extends WebComponent:
+object KPI extends WebComponent:
+
+  enum Orientation:
+    case horizontal, vertical
+
+  enum State:
+    case alarm, neutral, warning
+
+  enum Value:
+    case number, string
 
   @js.native
   trait RawElement extends js.Object
 
   @js.native
-  @JSImport("@siemens/ix/dist/esm/ix-content.entry")
+  @JSImport("@siemens/ix/dist/esm/ix-kpi.entry")
   object RawImport extends js.Object
 
   initialise(RawImport)
 
   override type Ref = dom.html.Element & RawElement
 
-  protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-content")
+  protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("ix-kpi")
 
-  object slot:
-    val header: Slot = Slot("header")
+  val label: HtmlAttr[String] = stringAttr("label")
+
+  val orientation: HtmlAttr[Orientation] = HtmlAttr("orientation", stringEnumCodec(Orientation.valueOf))
+
+  val state: HtmlAttr[State] = HtmlAttr("state", stringEnumCodec(State.valueOf))
+
+  val unit: HtmlAttr[String] = stringAttr("unit")
+
+  val value: HtmlAttr[Value] = HtmlAttr("state", stringEnumCodec(Value.valueOf))
