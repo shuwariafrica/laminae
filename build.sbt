@@ -1,6 +1,6 @@
 inThisBuild(
   List(
-    scalaVersion := "3.7.1",
+    scalaVersion := "3.7.3",
     organization := "africa.shuwari.laminae",
     description := "Laminae collection for easier construction of Laminar applications.",
     homepage := Some(url("https://github.com/shuwarifrica/sbt-js")),
