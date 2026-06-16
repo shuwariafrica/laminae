@@ -1,7 +1,7 @@
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari" % "0.14.2")
 addSbtPlugin("africa.shuwari.sbt" % "sbt-shuwari-js" % "0.14.2")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.3")
-addSbtPlugin("com.github.sbt" % "sbt-dynver" % "5.1.0")
+addSbtPlugin("com.github.sbt" % "sbt-dynver" % "5.1.1")
 addSbtPlugin("com.github.sbt" % "sbt-git" % "2.1.0")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.5.4")
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.19.0")
